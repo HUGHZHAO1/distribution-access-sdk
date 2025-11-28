@@ -58,11 +58,27 @@ public class ClientConfig {
     }
 
 
+    public static int getUseMode() {
+        return getInt(ClientConfigConstants.USE_MODE, ClientConfigConstants.USE_MODE_FORMAL);
+    }
+
     public static String getAccessKey() {
+        int useMode = getUseMode();
+        if (useMode == ClientConfigConstants.USE_MODE_TEST_PRICE) {
+            return getString(ClientConfigConstants.TEST_ACCESS_KEY, "testAccessKey");
+        } else if (useMode == ClientConfigConstants.USE_MODE_TEST_SETTLE_PRICE) {
+            return getString(ClientConfigConstants.TEST_SETTLE_ACCESS_KEY, "testSettleAccessKey");
+        }
         return getString(ClientConfigConstants.ACCESS_KEY, "accessKey");
     }
 
     public static String getSecretKey() {
+        int useMode = getUseMode();
+        if (useMode == ClientConfigConstants.USE_MODE_TEST_PRICE) {
+            return getString(ClientConfigConstants.TEST_SECRET_KEY, "testSecretKey");
+        } else if (useMode == ClientConfigConstants.USE_MODE_TEST_SETTLE_PRICE) {
+            return getString(ClientConfigConstants.TEST_SETTLE_SECRET_KEY, "testSettleSecretKey");
+        }
         return getString(ClientConfigConstants.SECRET_KEY, "secretKey");
     }
 

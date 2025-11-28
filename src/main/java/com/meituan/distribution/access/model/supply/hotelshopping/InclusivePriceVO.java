@@ -17,4 +17,8 @@ public class InclusivePriceVO {
      * 给分销商的佣金,单位为分
      */
     private Integer subPrice;
+    /**
+     * 结算价,单位为分
+     */
+    private Integer settlePrice;
 }

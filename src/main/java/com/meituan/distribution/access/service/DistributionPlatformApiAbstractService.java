@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import com.meituan.distribution.access.config.ClientConfig;
 import com.meituan.distribution.access.constants.ApiRequestParamConstants;
+import com.meituan.distribution.access.constants.ClientConfigConstants;
 import com.meituan.distribution.access.constants.DistributionPlatformConstants;
 import com.meituan.distribution.access.enums.ApiResponseCodeEnum;
 import com.meituan.distribution.access.utils.AuthUtil;
@@ -77,6 +78,7 @@ public abstract class DistributionPlatformApiAbstractService<PARAM,RESPONSE> {
                     .data(param)
                     .nonce()
                     .timestamp()
+                    .test()
                     .signature()
                     .build();
             log.info("请求体：{}", requestBody);
@@ -122,6 +124,17 @@ public abstract class DistributionPlatformApiAbstractService<PARAM,RESPONSE> {
 
         public RequestParamBuilder<PARAM> timestamp() {
             paramMap.put(ApiRequestParamConstants.TIMESTAMP, Instant.now().getEpochSecond());
+            return this;
+        }
+
+
+        public RequestParamBuilder<PARAM> test() {
+            int useMode = ClientConfig.getUseMode();
+            if (useMode == ClientConfigConstants.USE_MODE_TEST_PRICE) {
+                paramMap.put(ApiRequestParamConstants.TEST, "test");
+            } else if (useMode == ClientConfigConstants.USE_MODE_TEST_SETTLE_PRICE) {
+                paramMap.put(ApiRequestParamConstants.TEST, "testSettlePrice");
+            }
             return this;
         }
 

@@ -22,6 +22,10 @@ public class PriceModelVO {
      */
     private Integer subRatio;
     /**
+     * 结算价,单位为分
+     */
+    private Integer settlePrice;
+    /**
      * 价日类型, 0--平日  1--周末  2--特殊日
      */
     private Integer dayType;
